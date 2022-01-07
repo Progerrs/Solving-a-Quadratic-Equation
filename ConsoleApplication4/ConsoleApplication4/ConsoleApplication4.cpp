@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <string> 
 
 double Solving_the_quadratic_equation(int32_t first_coefficient, int32_t second_coefficient, int32_t third_coefficient);
 int32_t Is_a_Number(std::string text);
@@ -22,7 +23,7 @@ int main()
         while (true)
         {
             if (first_coefficient == 0) {
-                std::cout << "Первый коэффициент долже быть больше или равен нулю" << std::endl;
+                std::cout << "Первый коэффициент долже быть больше или меньше нуля" << std::endl;
                 first_coefficient = Is_a_Number("Введите первый коэффициент: ");
             }
             else {
@@ -81,19 +82,31 @@ double Solving_the_quadratic_equation(int32_t first_coefficient, int32_t second_
 
 int32_t Is_a_Number(std::string text)
 {
-    int32_t digit;
+    std::string digits_mayby = "";
+    bool is_number = true;
     while (true)
     {
+        is_number = true;
         std::cout << text;
-        std::cin >> digit;
-        if (std::cin.fail()) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-            std::cout << "Вы ввели не число" << std::endl;
+        std::cin >> digits_mayby;
+        for (char var : digits_mayby)
+        {
+            if (isdigit(var))
+            {
+                continue;
+            }
+            else
+            {
+                std::cout << "Вы ввели не число!" << std::endl;
+                is_number = false;
+                break;
+            }
+        }
+        if (is_number) {
+            return std::stoi(digits_mayby);
         }
         else {
-            return digit;
+            continue;
         }
     }
 }
